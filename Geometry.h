@@ -3,7 +3,7 @@
 #include "MathHeader.h"
 #include "TriangleMesh.h"
 
-TriangleMesh* generatePolySphere(float radius, uint32_t divisions)
+TriangleMesh* generatePolySphere(const Matrix4x4f &o2w, float radius, uint32_t divisions)
 {
 	// generate points
 	uint32_t numVertices = (divisions - 1) * divisions + 2;
@@ -82,10 +82,10 @@ TriangleMesh* generatePolySphere(float radius, uint32_t divisions)
 		vIdx = numV;
 	}
 
-	return new TriangleMesh(numPolys, faceIndex, vertexIndex, positions, normals, texCoords);
+	return new TriangleMesh(o2w, numPolys, faceIndex, vertexIndex, positions, normals, texCoords);
 }
 
-TriangleMesh* loadPolyMeshFromFile(const char *file)
+TriangleMesh* loadPolyMeshFromFile(const Matrix4x4f &o2w, const char *file)
 {
 	std::ifstream ifs;
 	try
@@ -133,7 +133,7 @@ TriangleMesh* loadPolyMeshFromFile(const char *file)
 			ss >> texCoords[i].x >> texCoords[i].y;
 		}
 
-		return new TriangleMesh(numFaces, faceIndex, vertIndex, positions, normals, texCoords);
+		return new TriangleMesh(o2w, numFaces, faceIndex, vertIndex, positions, normals, texCoords);
 	}
 	catch (...)
 	{

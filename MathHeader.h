@@ -27,10 +27,10 @@ bool rayTriangleIntersect(const Vec3f &origin, const Vec3f &direction,
 	float &t,
 	float &u, float &v)
 {
-	Vec3f edge0 = point1 - point0;
-	Vec3f edge1 = point2 - point1;
-	Vec3f perpVec = direction.CrossProduct(edge1);
-	float det = edge0.DotProduct(perpVec);
+	Vec3f edge0_1 = point1 - point0;
+	Vec3f edge1_2 = point2 - point0;
+	Vec3f perpVec = direction.CrossProduct(edge1_2);
+	float det = edge0_1.DotProduct(perpVec);
 
 	// Ray and Triangle are parallel if determinant is close to 0
 	if (fabs(det) < kEpsilon) return false;
@@ -41,11 +41,11 @@ bool rayTriangleIntersect(const Vec3f &origin, const Vec3f &direction,
 	u = originToPlaneVec.DotProduct(perpVec) * invDet;
 	if (u < 0 || u > 1) return false;
 
-	Vec3f qVec = originToPlaneVec.CrossProduct(edge0);
+	Vec3f qVec = originToPlaneVec.CrossProduct(edge0_1);
 	v = direction.DotProduct(qVec) * invDet;
 	if (v < 0 || u + v > 1) return false;
 
-	t = edge1.DotProduct(qVec) * invDet;
+	t = edge1_2.DotProduct(qVec) * invDet;
 
 	return true;
 }

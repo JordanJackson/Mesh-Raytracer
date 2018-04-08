@@ -188,100 +188,20 @@ public:
 		dst.z = c;
 	}
 
+	template<typename S>
+	Matrix4x4<S> Translate(Matrix4x4<S> &matrix, Vec3<S> &vec)
+	{
+		Matrix4x4<S> result;
+		result[3] = 
+			vec[0] * matrix[0] +
+			vec[1] * matrix[1] +
+			vec[2] * matrix[2] +
+			matrix[3];
+		return result;
+	}
+
 	Matrix4x4 Inverse() const
 	{
-		//int i, j, k;
-		//Matrix4x4 s;
-		//Matrix4x4 t(*this);
-
-		//// Forward elimination
-		//for (i = 0; i < 3; ++i)
-		//{
-		//	int pivot = i;
-
-		//	T pivotSize = t[i][i];
-
-		//	if (pivotSize < 0)
-		//		pivotSize = -pivotSize;
-
-		//	for (j = i + 1; j < 4; ++j)
-		//	{
-		//		T temp = t[j][i];
-
-		//		if (temp < 0)
-		//			temp = -temp;
-
-		//		if (temp > pivotSize)
-		//		{
-		//			pivot = j;
-		//			pivotSize = temp;
-		//		}
-		//	}
-
-		//	if (pivotSize == 0)
-		//	{
-		//		// Cannot invert singular matrix
-		//		return Matrix4x4();
-		//	}
-
-		//	if (pivot != i)
-		//	{
-		//		for (j = 0; j < 4; ++j)
-		//		{
-		//			T temp;
-
-		//			temp = t[i][j];
-		//			t[i][j] = t[pivot][j];
-		//			t[pivot][j] = temp;
-
-		//			temp = s[i][j];
-		//			s[i][j] = s[pivot][j];
-		//			s[pivot][j] = temp;
-		//		}
-		//	}
-
-		//	for (j = i + 1; j < 4; ++j)
-		//	{
-		//		T f = t[j][i] / t[i][i];
-
-		//		for (k = 0; k < 4; ++k)
-		//		{
-		//			t[j][k] -= f * t[i][k];
-		//			s[j][k] -= f * s[i][k];
-		//		}
-		//	}
-		//}
-
-		//// Backward substitution
-		//for (i = 3; i >= 0; --i)
-		//{
-		//	T f;
-
-		//	if ((f = t[i][i]) == 0)
-		//	{
-		//		// Cannot invert singular matrix
-		//		return Matrix4x4();
-		//	}
-
-		//	for (j = 0; j < 4; ++j)
-		//	{
-		//		t[i][j] /= f;
-		//		s[i][j] /= f;
-		//	}
-
-		//	for (j = 0; j < i; ++j)
-		//	{
-		//		f = t[j][i];
-
-		//		for (k = 0; k < 4; ++k)
-		//		{
-		//			t[j][k] -= f * t[i][k];
-		//			s[j][k] -= f * s[i][k];
-		//		}
-		//	}
-		//}
-
-		//return s;
 		int i, j, k;
 		Matrix4x4 s;
 		Matrix4x4 t(*this);
